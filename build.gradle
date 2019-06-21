@@ -133,7 +133,6 @@ dependencies {
 artifacts {
     archives sourcesJar
     archives javadocJar
-    archives jar
 }
 
 signing { sign configurations.archives }
