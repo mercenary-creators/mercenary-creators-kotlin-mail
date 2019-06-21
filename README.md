@@ -1,4 +1,4 @@
-Mercenary Creators Kotlin IO
+Mercenary Creators Kotlin Mail
 ======
 
 Downloading artifacts
