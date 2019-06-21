@@ -3,7 +3,7 @@ Mercenary Creators Kotlin Mail
 
 Downloading artifacts
 
-RELEASE:
+SNAPSHOTS:
 
 Maven:
 ```xml
