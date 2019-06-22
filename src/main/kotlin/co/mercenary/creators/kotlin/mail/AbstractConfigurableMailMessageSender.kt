@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.io.IS_NOT_FOUND
+import co.mercenary.creators.kotlin.util.IS_NOT_FOUND
 import java.util.*
 
 abstract class AbstractConfigurableMailMessageSender : ConfigurableMailMessageSender {

@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.*
+import co.mercenary.creators.kotlin.util.*
 import java.util.*
 
 abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
@@ -95,7 +95,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
     override fun getBcc() = bc
 
     override fun setDate(date: Date) {
-        this.date = date.copy()
+        this.date =date.copyOf()
     }
 
     override fun getDate() = date

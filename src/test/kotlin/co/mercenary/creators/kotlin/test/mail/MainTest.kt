@@ -33,12 +33,5 @@ class MainTest : AbstractKotlinTest() {
             name
         }
         info { IO.getPathExtension(name) }
-        val data = HEX.encodeer(name)
-        info { data }
-        val text = HEX.decodeer(data)
-        info { text }
-        name.shouldBe(text) {
-            name
-        }
     }
 }

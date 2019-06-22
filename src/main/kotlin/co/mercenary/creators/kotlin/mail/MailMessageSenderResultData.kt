@@ -16,13 +16,12 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.*
-
+import co.mercenary.creators.kotlin.util.*
 import java.util.*
 
 data class MailMessageSenderResultData(private val id: String? = null, private val date: Date? = null, private val good: Boolean = false) : MailMessageSenderResult {
     private val text = id ?: "<${uuid()}.UNKNOWN>"
     override fun getId() = text
     override fun isValid() = good
-    override fun getDate() = date.copy()
+    override fun getDate() = date.copyOf()
 }

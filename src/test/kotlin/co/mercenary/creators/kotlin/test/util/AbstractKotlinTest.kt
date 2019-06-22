@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.kotlin.test.util
 
-import co.mercenary.creators.kotlin.io.*
+import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
 import org.opentest4j.AssertionFailedError
@@ -101,4 +101,6 @@ abstract class AbstractKotlinTest : AbstractLogging() {
     fun <T : Any> (() -> T?).shouldNotBe(value: Any?, block: () -> Any?) = assertNotEquals(value, this.invoke(), block)
 
     fun <T : Any> (() -> T?).shouldNotBe(value: () -> Any?, block: () -> Any?) = assertNotEquals(value.invoke(), this.invoke(), block)
+
+    fun <T> timed(block: () -> T): T = timed({ info { it } }, block)
 }

@@ -17,8 +17,8 @@
 package co.mercenary.creators.kotlin.mail.javamail
 
 import co.mercenary.creators.kotlin.*
-import co.mercenary.creators.kotlin.io.EMPTY_STRING
 import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.util.*
 import java.util.concurrent.ConcurrentHashMap
 import javax.mail.*
 import kotlin.math.*

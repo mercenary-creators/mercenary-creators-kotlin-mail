@@ -17,8 +17,9 @@
 package co.mercenary.creators.kotlin.mail
 
 import co.mercenary.creators.kotlin.io.data.ContentResource
+import co.mercenary.creators.kotlin.util.core.CoreValidated
 
-class MimeMailMessageBody : Validated {
+class MimeMailMessageBody : CoreValidated {
 
     private var body: String? = null
 

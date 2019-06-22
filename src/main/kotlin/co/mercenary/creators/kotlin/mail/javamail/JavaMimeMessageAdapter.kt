@@ -16,9 +16,9 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
-import co.mercenary.creators.kotlin.io.EMPTY_STRING
 import co.mercenary.creators.kotlin.io.data.ContentResource
 import co.mercenary.creators.kotlin.mail.MimeMode
+import co.mercenary.creators.kotlin.util.EMPTY_STRING
 import java.util.*
 import javax.activation.*
 import javax.mail.*

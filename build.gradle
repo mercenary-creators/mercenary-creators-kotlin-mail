@@ -17,7 +17,7 @@
 buildscript {
     ext {
         set('kotlinVersion', '1.3.40')
-        set('MERCENARY_CREATORS_IO_VERSION', '0.0.2-SNAPSHOT')
+        set('MERCENARY_CREATORS_IO_VERSION', '0.0.3-SNAPSHOT')
     }
     repositories {
         mavenCentral()
@@ -41,13 +41,15 @@ apply plugin: 'signing'
 apply plugin: 'kotlin-spring'
 apply plugin: 'org.owasp.dependencycheck'
 
+import org.ajoberstar.grgit.Grgit
+
 sourceCompatibility = 1.8
 
 targetCompatibility = 1.8
 
 group = 'co.mercenary-creators'
 
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 
 task doJavaDocs(type: Javadoc) {
     source = sourceSets.main.allJava
@@ -78,12 +80,12 @@ compileTestKotlin {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: doJavaDocs) {
-    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
     from "${buildDir}/docs/javadoc"
 }
 
@@ -149,12 +151,16 @@ String getBuildServerBuild() {
     System.getenv('BUILD_DISPLAY_NAME') ?: "Gradle version ${gradle.gradleVersion}"
 }
 
+static String getBuildGITHomeSCM() {
+    'scm:git@github.com:mercenary-creators/' + getProjectArtifactID() + '.git'
+}
+
 static String getBuildGITHomeURL() {
     'https://github.com/mercenary-creators/' + getProjectArtifactID()
 }
 
 static String getBuildGITCommitHash() {
-    getBuildGITHomeURL() + '/commit/'
+    getBuildGITHomeURL() + '/commit/' + Grgit.open().head().id
 }
 
 static String getProjectArtifactID() {
@@ -186,12 +192,12 @@ uploadArchives {
             }
             pom.project {
                 packaging 'jar'
-                description 'Mercenary Creators Kotlin.'
-                url 'https://github.com/mercenary-creators/mercenary-creators-core-kotlin'
+                description getProjectCommonName()
+                url getBuildGITHomeURL()
                 scm {
-                    url 'scm:git@github.com:mercenary-creators/mercenary-creators-core-kotlin.git'
-                    connection 'scm:git@github.com:mercenary-creators/mercenary-creators-core-kotlin.git'
-                    developerConnection 'scm:git@github.com:mercenary-creators/mercenary-creators-core-kotlin.git'
+                    url getBuildGITHomeSCM()
+                    connection getBuildGITHomeSCM()
+                    developerConnection getBuildGITHomeSCM()
                 }
                 licenses {
                     license {

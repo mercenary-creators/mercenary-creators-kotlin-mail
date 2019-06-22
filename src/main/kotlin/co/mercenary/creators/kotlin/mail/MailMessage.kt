@@ -16,9 +16,10 @@
 
 package co.mercenary.creators.kotlin.mail
 
+import co.mercenary.creators.kotlin.util.core.CoreValidated
 import java.util.*
 
-interface MailMessage<BODY> : Validated {
+interface MailMessage<BODY> : CoreValidated {
     fun addTo(list: List<String>)
     fun setTo(list: List<String>)
     fun getTo(): List<String>

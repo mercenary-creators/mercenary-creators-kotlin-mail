@@ -18,29 +18,12 @@
 
 package co.mercenary.creators.kotlin
 
-import co.mercenary.creators.kotlin.mail.Validated
 import reactor.core.publisher.*
-import java.util.*
 import java.util.stream.Collectors
 
 typealias ParallelScheduler = co.mercenary.creators.kotlin.reactor.ParallelScheduler
 
 typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
-
-fun isValid(value: Any?): Boolean = when (value) {
-    null -> false
-    is Validated -> value.isValid()
-    else -> true
-}
-
-fun Date?.copy(): Date = when (this) {
-    null -> Date()
-    else -> Date(time)
-}
-
-fun uuid() = UUID.randomUUID().toString()
-
-fun getProcessors(): Int = Runtime.getRuntime().availableProcessors()
 
 fun <T : Any> Mono<T>.blocks(): T = block()!!
 
