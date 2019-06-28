@@ -95,7 +95,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
     override fun getBcc() = bc
 
     override fun setDate(date: Date) {
-        this.date =date.copyOf()
+        this.date = date.copyOf()
     }
 
     override fun getDate() = date

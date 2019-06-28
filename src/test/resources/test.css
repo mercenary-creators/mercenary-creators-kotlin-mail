@@ -14,24 +14,7 @@
  * limitations under the License.
  */
 
-package co.mercenary.creators.kotlin.test.mail
-
-import co.mercenary.creators.kotlin.io.data.*
-import co.mercenary.creators.kotlin.test.util.AbstractKotlinTest
-import org.junit.jupiter.api.Test
-
-class MainTest : AbstractKotlinTest() {
-    @Test
-    fun text() {
-        val name = "dune.jpg"
-        val dune = ClassPathContentResource(name)
-        info { dune }
-        info { dune.getContentType() }
-        info { dune.getContentTime() }
-        info { dune.getContentSize() }
-        dune.isContentCache().shouldBe(false) {
-            name
-        }
-        info { IO.getPathExtension(name) }
-    }
+body {
+    margin: 0;
+    padding: 0;
 }

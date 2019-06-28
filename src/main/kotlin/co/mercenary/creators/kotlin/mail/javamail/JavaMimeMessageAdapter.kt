@@ -16,9 +16,9 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
-import co.mercenary.creators.kotlin.io.data.ContentResource
 import co.mercenary.creators.kotlin.mail.MimeMode
 import co.mercenary.creators.kotlin.util.EMPTY_STRING
+import co.mercenary.creators.kotlin.util.io.ContentResource
 import java.util.*
 import javax.activation.*
 import javax.mail.*
@@ -30,9 +30,9 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
 
     private var main: MimeMultipart? = null
 
-    constructor(session: Session, mode: MimeMode) : this(JavaMimeMessage(session), mode)
+    constructor(session: Session, mode: MimeMode = MimeMode.NONE) : this(JavaMimeMessage(session), mode)
 
-    constructor(mime: JavaMimeMessage, mode: MimeMode) : this(mime) {
+    constructor(mime: JavaMimeMessage, mode: MimeMode = MimeMode.NONE) : this(mime) {
         when (mode) {
             MimeMode.NONE -> {
                 setMimeMessageParts(root = null, main = null)

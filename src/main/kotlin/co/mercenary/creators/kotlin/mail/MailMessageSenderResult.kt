@@ -16,10 +16,10 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.util.core.CoreValidated
+import co.mercenary.creators.kotlin.util.MercenaryValidated
 import java.util.*
 
-interface MailMessageSenderResult : CoreValidated {
+interface MailMessageSenderResult : MercenaryValidated {
     fun getId(): String
     fun getDate(): Date
 }

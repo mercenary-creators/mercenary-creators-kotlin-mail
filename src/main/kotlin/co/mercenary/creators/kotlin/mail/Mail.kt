@@ -16,19 +16,16 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.io.*
-import co.mercenary.creators.kotlin.io.data.*
-import co.mercenary.creators.kotlin.util.core.*
-import co.mercenary.creators.kotlin.util.toTrimOrNull
+import co.mercenary.creators.kotlin.util.*
+import co.mercenary.creators.kotlin.util.io.*
 import java.io.*
-import java.net.*
+import java.net.URL
 import java.nio.charset.Charset
 import java.nio.file.Path
 import java.util.*
-
 import javax.mail.internet.InternetAddress
 
-class Mail(private val probe: ContentTypeProbe = IO.getContentTypeProbe(), block: Mail.() -> Unit) : CoreValidated {
+class Mail(private val probe: ContentTypeProbe = IO.getContentTypeProbe(), block: Mail.() -> Unit) : MercenaryValidated {
 
     private val messages = arrayListOf<MailMessage<*>>()
 
@@ -60,7 +57,7 @@ class Mail(private val probe: ContentTypeProbe = IO.getContentTypeProbe(), block
 
     fun send(sender: MailMessageSender) = sender.send(messages).also { clear() }
 
-    fun <S : MailMessageSender> send(builder: CoreBuilder<S>) = send(builder.build())
+    fun <S : MailMessageSender> send(builder: MercenaryBuilder<S>) = send(builder.build())
 
     abstract inner class MailMessageBuilder(private val mail: MailMessage<*>) {
 

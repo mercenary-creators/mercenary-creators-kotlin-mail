@@ -16,8 +16,8 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.io.data.InputStreamSupplier
-import co.mercenary.creators.kotlin.io.toInputStream
+import co.mercenary.creators.kotlin.util.io.InputStreamSupplier
+import co.mercenary.creators.kotlin.util.toInputStream
 import java.io.*
 import java.net.URL
 import java.nio.file.Path

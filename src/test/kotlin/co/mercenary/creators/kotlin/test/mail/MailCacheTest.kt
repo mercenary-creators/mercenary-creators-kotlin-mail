@@ -21,10 +21,13 @@ import co.mercenary.creators.kotlin.test.util.AbstractKotlinMailTest
 import co.mercenary.creators.kotlin.util.ClassPathContentResource
 import org.junit.jupiter.api.Test
 
-class MailTest : AbstractKotlinMailTest() {
+class MailCacheTest : AbstractKotlinMailTest() {
     @Test
     fun text() {
         val send = getMailMessageSender()
+        val docs = ClassPathContentResource("test.pdf").toContentCache()
+        val dune = ClassPathContentResource("dune.jpg").toContentCache()
+        val dean = ClassPathContentResource("dean.html").toContentCache()
         val mail = Mail {
             repeat(14) { index ->
                 mime {
@@ -33,9 +36,9 @@ class MailTest : AbstractKotlinMailTest() {
                     subject("Subject: Mime Message Attach HTML $index")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
-                        html(ClassPathContentResource("dean.html"))
-                        attach("test.pdf", ClassPathContentResource("test.pdf"))
-                        inline("dune.jpg", ClassPathContentResource("dune.jpg"))
+                        html(dean)
+                        attach("test.pdf", docs)
+                        inline("dune.jpg", dune)
                     }
                 }
             }

@@ -16,27 +16,25 @@
 
 package co.mercenary.creators.kotlin.test.util
 
-import co.mercenary.creators.kotlin.io.toInputStream
 import co.mercenary.creators.kotlin.mail.*
-import java.net.URL
+import co.mercenary.creators.kotlin.util.*
 import java.util.*
 
 abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
-            URL("file:/opt/development/properties/mercenary-creators-core/mail-test.properties").toInputStream().use { prop.load(it) }
+            DefaultContentResourceLoader().getContentResource("file:/opt/development/properties/mercenary-creators-core/mail-test.properties").toInputStream().use { prop.load(it) }
         }
     }
 
     protected open fun getMailMessageSender(): MailMessageSender {
-        val builder = MailMessageSenderBuilder {
+        return MailMessageSenderBuilder {
             port(587)
             host("smtp.gmail.com")
             username(getConfigProperty("co.mercenary.creators.core.test.mail.user"))
             password(getConfigProperty("co.mercenary.creators.core.test.mail.pass"))
             configuration("mail.smtp.auth" to true, "mail.smtp.starttls.enable" to true)
-        }
-        return builder.build()
+        }.build()
     }
 }

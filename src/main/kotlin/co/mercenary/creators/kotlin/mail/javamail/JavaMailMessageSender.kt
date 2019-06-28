@@ -35,8 +35,11 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
 
     protected open fun text(message: MailMessage<*>): String? = if (message.isValid()) {
         when (message) {
-            is TextMailMessage -> message.getBody() ?: EMPTY_STRING
-            is MimeMailMessage -> message.getBody()?.getMessageBodyText() ?: EMPTY_STRING
+            is TextMailMessage -> message.getBody()
+            is MimeMailMessage -> when(val body = message.getBody()) {
+                null -> null
+                else -> body.getMessageBodyText() ?: EMPTY_STRING
+            }
             else -> null
         }
     }
@@ -63,9 +66,9 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                 }
                 else -> false
             }
-            val mime = when {
-                part.or(html != null) -> JavaMimeMessageAdapter(sess, MimeMode.MIXED)
-                else -> JavaMimeMessageAdapter(sess, MimeMode.NONE)
+            val mime = when(part.or(html != null)) {
+                true -> JavaMimeMessageAdapter(sess, MimeMode.MIXED)
+                else -> JavaMimeMessageAdapter(sess)
             }
             mime.setFrom(from)
             mime.setDate(message.getDate())
