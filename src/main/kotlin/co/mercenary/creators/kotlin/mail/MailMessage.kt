@@ -16,10 +16,10 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.util.MercenaryValidated
+import co.mercenary.creators.kotlin.util.type.Validated
 import java.util.*
 
-interface MailMessage<BODY> : MercenaryValidated {
+interface MailMessage<BODY> : Validated {
     fun addTo(list: List<String>)
     fun setTo(list: List<String>)
     fun getTo(): List<String>

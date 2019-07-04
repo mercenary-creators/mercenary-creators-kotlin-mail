@@ -17,12 +17,12 @@
 package co.mercenary.creators.kotlin.mail
 
 import co.mercenary.creators.kotlin.DefaultMailMessageSender
-import co.mercenary.creators.kotlin.util.MercenaryBuilder
+import co.mercenary.creators.kotlin.util.type.Builder
 import java.io.*
 import java.net.URL
 import java.util.*
 
-class MailMessageSenderBuilder(private val sender: ConfigurableMailMessageSender = DefaultMailMessageSender(), block: MailMessageSenderBuilder.() -> Unit) : MercenaryBuilder<ConfigurableMailMessageSender> {
+class MailMessageSenderBuilder(private val sender: ConfigurableMailMessageSender = DefaultMailMessageSender(), block: MailMessageSenderBuilder.() -> Unit) : Builder<ConfigurableMailMessageSender> {
 
     init {
         block(this)

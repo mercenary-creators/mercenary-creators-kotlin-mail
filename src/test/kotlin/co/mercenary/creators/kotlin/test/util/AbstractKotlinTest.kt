@@ -19,7 +19,6 @@ package co.mercenary.creators.kotlin.test.util
 import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
-import org.opentest4j.AssertionFailedError
 import java.util.*
 
 abstract class AbstractKotlinTest : AbstractLogging() {
@@ -78,7 +77,7 @@ abstract class AbstractKotlinTest : AbstractLogging() {
                 else -> false
             }
             if (good.not()) {
-                throw AssertionFailedError(null, cause)
+                throw AssertionError(null, cause)
             }
             null
         }

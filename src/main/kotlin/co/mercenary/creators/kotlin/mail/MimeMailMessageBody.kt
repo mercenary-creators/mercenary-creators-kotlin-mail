@@ -16,10 +16,10 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.util.MercenaryValidated
 import co.mercenary.creators.kotlin.util.io.ContentResource
+import co.mercenary.creators.kotlin.util.type.Validated
 
-class MimeMailMessageBody : MercenaryValidated {
+class MimeMailMessageBody : Validated {
 
     private var body: String? = null
 
