@@ -16,7 +16,6 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
-import co.mercenary.creators.kotlin.*
 import co.mercenary.creators.kotlin.mail.*
 import co.mercenary.creators.kotlin.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -36,7 +35,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
     protected open fun text(message: MailMessage<*>): String? = if (message.isValid()) {
         when (message) {
             is TextMailMessage -> message.getBody()
-            is MimeMailMessage -> when(val body = message.getBody()) {
+            is MimeMailMessage -> when (val body = message.getBody()) {
                 null -> null
                 else -> body.getMessageBodyText() ?: EMPTY_STRING
             }
@@ -66,7 +65,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                 }
                 else -> false
             }
-            val mime = when(part.or(html != null)) {
+            val mime = when (part.or(html != null)) {
                 true -> JavaMimeMessageAdapter(sess, MimeMode.MIXED)
                 else -> JavaMimeMessageAdapter(sess)
             }

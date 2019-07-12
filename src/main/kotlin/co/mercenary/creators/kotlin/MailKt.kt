@@ -18,16 +18,7 @@
 
 package co.mercenary.creators.kotlin
 
-import reactor.core.publisher.Flux
-import java.util.stream.Collectors
-
-typealias ParallelScheduler = co.mercenary.creators.kotlin.reactor.ParallelScheduler
-
 typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
-
-internal fun <T : Any> Iterable<T>.toFlux(): Flux<T> = Flux.fromIterable(this)
-
-internal fun <T : Any> Flux<T>.toList(): List<T> = collect(Collectors.toList<T>()).block()!!
 
 
 
