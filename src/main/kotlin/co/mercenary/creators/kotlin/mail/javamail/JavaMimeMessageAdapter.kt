@@ -17,7 +17,7 @@
 package co.mercenary.creators.kotlin.mail.javamail
 
 import co.mercenary.creators.kotlin.mail.MimeMode
-import co.mercenary.creators.kotlin.util.EMPTY_STRING
+import co.mercenary.creators.kotlin.util.*
 import co.mercenary.creators.kotlin.util.io.ContentResource
 import java.util.*
 import javax.activation.*
@@ -68,9 +68,9 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
 
     fun isMultipart(): Boolean = (root != null)
 
-    fun getRootMimeMultipart(): MimeMultipart = root ?: throw IllegalStateException("root")
+    fun getRootMimeMultipart(): MimeMultipart = root ?: throw MercenaryExceptiion("root")
 
-    fun getMainMimeMultipart(): MimeMultipart = main ?: throw IllegalStateException("main")
+    fun getMainMimeMultipart(): MimeMultipart = main ?: throw MercenaryExceptiion("main")
 
     fun setSubject(text: String?) {
         getMimeMessage().subject = text ?: EMPTY_STRING

@@ -158,7 +158,8 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                     try {
                         it.close()
                     }
-                    catch (_: Throwable) {
+                    catch (cause: Throwable) {
+                        Throwables.assert(cause)
                     }
                 }
             }
