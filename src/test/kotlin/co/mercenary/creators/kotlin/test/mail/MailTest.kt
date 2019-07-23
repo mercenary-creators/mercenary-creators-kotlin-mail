@@ -26,7 +26,7 @@ class MailTest : AbstractKotlinMailTest() {
     fun text() {
         val send = getMailMessageSender()
         val mail = Mail {
-            repeat(14) { index ->
+            repeat(8) { index ->
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
@@ -44,7 +44,7 @@ class MailTest : AbstractKotlinMailTest() {
             mail.send(send)
         }
         info { list.size }
-        list.size.shouldBe(14) {
+        list.size.shouldBe(8) {
             list.size
         }
     }

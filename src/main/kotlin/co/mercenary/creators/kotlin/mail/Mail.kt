@@ -26,7 +26,7 @@ import java.nio.file.Path
 import java.util.*
 import javax.mail.internet.InternetAddress
 
-class Mail(private val probe: ContentTypeProbe = IO.getContentTypeProbe(), block: Mail.() -> Unit) : Validated {
+class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), block: Mail.() -> Unit) : Validated {
 
     private val messages = arrayListOf<MailMessage<*>>()
 
@@ -254,7 +254,8 @@ class Mail(private val probe: ContentTypeProbe = IO.getContentTypeProbe(), block
             return try {
                 InternetAddress(text, true)
             }
-            catch (_: Throwable) {
+            catch (cause: Throwable) {
+                Throwables.assert(cause)
                 null
             }
         }

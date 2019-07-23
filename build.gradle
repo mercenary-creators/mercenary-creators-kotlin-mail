@@ -17,7 +17,7 @@
 buildscript {
     ext {
         set('kotlinVersion', '1.3.41')
-        set('MERCENARY_CREATORS_UTIL_VERSION', '1.0.0-SNAPSHOT')
+        set('MERCENARY_CREATORS_UTIL_VERSION', '1.0.1-SNAPSHOT')
     }
     repositories {
         mavenCentral()
@@ -26,7 +26,7 @@ buildscript {
         classpath(group: 'org.ajoberstar', name: 'grgit', version: '1.7.2')
         classpath(group: 'commons-codec', name: 'commons-codec', version: '1.12')
         classpath(group: 'commons-logging', name: 'commons-logging', version: '1.2')
-        classpath(group: 'org.owasp', name: 'dependency-check-gradle', version: '4.0.2')
+        classpath(group: 'org.owasp', name: 'dependency-check-gradle', version: '5.1.1')
         classpath(group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.8')
         classpath(group: 'org.jetbrains.kotlin', name: 'kotlin-noarg', version: kotlinVersion)
         classpath(group: 'org.jetbrains.kotlin', name: 'kotlin-allopen', version: kotlinVersion)
@@ -49,7 +49,7 @@ targetCompatibility = 1.8
 
 group = 'co.mercenary-creators'
 
-version = '1.0.0-SNAPSHOT'
+version = '1.0.1-SNAPSHOT'
 
 task doJavaDocs(type: Javadoc) {
     source = sourceSets.main.allJava
@@ -126,9 +126,10 @@ dependencies {
     testCompile(group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.26')
     testCompile(group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.26')
     testCompile(group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3')
+    testCompile(group: 'io.projectreactor', name: 'reactor-test', version: '3.2.10.RELEASE')
     testCompile(group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: kotlinVersion)
-    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0')
-    testRuntime(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0')
+    testCompile(group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.1')
+    testRuntime(group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.1')
 }
 
 artifacts {

@@ -29,7 +29,7 @@ class MailCacheTest : AbstractKotlinMailTest() {
         val dune = ClassPathContentResource("dune.jpg").toContentCache()
         val dean = ClassPathContentResource("dean.html").toContentCache()
         val mail = Mail {
-            repeat(14) { index ->
+            repeat(8) { index ->
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
@@ -47,7 +47,7 @@ class MailCacheTest : AbstractKotlinMailTest() {
             mail.send(send)
         }
         info { list.size }
-        list.size.shouldBe(14) {
+        list.size.shouldBe(8) {
             list.size
         }
     }
