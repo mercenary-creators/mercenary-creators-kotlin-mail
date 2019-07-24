@@ -218,6 +218,10 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
             inline(name, ByteArrayContentResource(data, name, getContentTypeProbe().getContentType(name, type)))
         }
 
+        fun inline(name: String, make: () ->  ContentResource) {
+            inline(name, make.invoke())
+        }
+
         fun inline(name: String, data: ContentResource) {
             body.addInlinePart(name, data)
         }
@@ -236,6 +240,10 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
 
         fun attach(name: String, data: ByteArray, type: String = DEFAULT_CONTENT_TYPE) {
             attach(name, ByteArrayContentResource(data, name, getContentTypeProbe().getContentType(name, type)))
+        }
+
+        fun attach(name: String, make: () ->  ContentResource) {
+            attach(name, make.invoke())
         }
 
         fun attach(name: String, data: ContentResource) {
