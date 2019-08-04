@@ -19,8 +19,3 @@
 package co.mercenary.creators.kotlin
 
 typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
-
-
-
-
-

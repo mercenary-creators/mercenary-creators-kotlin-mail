@@ -19,6 +19,7 @@ package co.mercenary.creators.kotlin.mail
 import co.mercenary.creators.kotlin.util.*
 import co.mercenary.creators.kotlin.util.io.*
 import co.mercenary.creators.kotlin.util.type.*
+import co.mercenary.creators.kotlin.util.type.Throwables
 import java.io.*
 import java.net.URL
 import java.nio.charset.Charset
