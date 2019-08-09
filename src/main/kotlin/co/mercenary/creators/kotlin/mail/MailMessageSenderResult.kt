@@ -22,4 +22,5 @@ import java.util.*
 interface MailMessageSenderResult : Validated {
     fun getId(): String
     fun getDate(): Date
+    fun getMessage(): String
 }

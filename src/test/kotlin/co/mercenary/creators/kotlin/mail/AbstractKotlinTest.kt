@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package co.mercenary.creators.kotlin.test.util
+package co.mercenary.creators.kotlin.mail
 
 import co.mercenary.creators.kotlin.util.*
+import co.mercenary.creators.kotlin.util.io.ContentResource
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
 import java.util.*
 
 abstract class AbstractKotlinTest : AbstractLogging() {
 
+    val loader = DefaultContentResourceLoader()
+
     private val conf: Properties by lazy {
         getConfigPropertiesBuilder().invoke()
     }
+
+    fun ContentResource.cache() = toContentCache()
 
     protected open fun getConfigPropertiesBuilder(): () -> Properties = { Properties() }
 
@@ -59,6 +64,10 @@ abstract class AbstractKotlinTest : AbstractLogging() {
         Assertions.assertEquals(expected, actual, toSafeString(block))
     }
 
+    fun assertEquals(expected: Any?, actual: Any?) {
+        Assertions.assertEquals(expected, actual)
+    }
+
     fun assertEquals(expected: ByteArray?, actual: ByteArray?, block: () -> Any?) {
         Assertions.assertArrayEquals(expected, actual, toSafeString(block))
     }
@@ -82,6 +91,10 @@ abstract class AbstractKotlinTest : AbstractLogging() {
             null
         }
     }
+
+    infix fun <T : Any?> Iterable<T>?.shouldBe(value: Iterable<*>?) = assertEquals(value?.toList(), this?.toList())
+
+    infix fun <T : Any> T?.shouldBe(value: Any?) = assertEquals(value, this)
 
     fun <T : Any?> List<T>.shouldBe(value: Iterable<*>?, block: () -> Any?) = assertEquals(value?.toList(), this, block)
 

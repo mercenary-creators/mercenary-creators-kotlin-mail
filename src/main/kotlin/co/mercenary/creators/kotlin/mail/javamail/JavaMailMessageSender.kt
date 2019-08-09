@@ -93,8 +93,14 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                 }
             }
             if (call.isConnected) {
-                mime.send(call)
-                MailMessageSenderResultData(mime.getId(), mime.getDate(), true)
+                try {
+                    mime.send(call)
+                    MailMessageSenderResultData(mime.getId(), mime.getDate(), true)
+                }
+                catch (cause: Throwable) {
+                    Throwables.assert(cause)
+                    MailMessageSenderResultData(message = cause.toString())
+                }
             }
             else {
                 MailMessageSenderResultData()
@@ -147,7 +153,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         val maps = ConcurrentHashMap<String, Transport>(size)
         try {
             ParallelScheduler("$size-mail-sender", size).also { on ->
-                return messages.toFlux().parallel(size).runOn(on).map { semd(it, sess, maps) }.sequential().toList().also {
+                return messages.toFlux().parallel(size).runOn(on).map { semd(it, sess, maps) }.sequential(size).toList().also {
                     on.dispose()
                 }
             }

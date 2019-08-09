@@ -16,26 +16,24 @@
 
 package co.mercenary.creators.kotlin.test.mail
 
-import co.mercenary.creators.kotlin.mail.Mail
-import co.mercenary.creators.kotlin.test.util.AbstractKotlinMailTest
-import co.mercenary.creators.kotlin.util.ClassPathContentResource
+import co.mercenary.creators.kotlin.mail.*
 import org.junit.jupiter.api.Test
 
 class MailTest : AbstractKotlinMailTest() {
     @Test
-    fun text() {
+    fun test() {
         val send = getMailMessageSender()
         val mail = Mail {
-            repeat(8) { index ->
+            repeat(many) { index ->
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
                     subject("Subject: Mime Message Attach HTML $index")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
-                        html(ClassPathContentResource("dean.html"))
-                        attach("test.pdf", ClassPathContentResource("test.pdf"))
-                        inline("dune.jpg", ClassPathContentResource("dune.jpg"))
+                        html(loader["dean.html"])
+                        attach("test.pdf", loader["test.pdf"])
+                        inline("dune.jpg", loader["dune.jpg"])
                     }
                 }
             }
@@ -44,8 +42,8 @@ class MailTest : AbstractKotlinMailTest() {
             mail.send(send)
         }
         info { list.size }
-        list.size.shouldBe(8) {
-            list.size
-        }
+        list.size shouldBe many
+        val size = list.filter { it.isValid().not() }.size
+        info { size }
     }
 }

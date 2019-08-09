@@ -104,6 +104,10 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
         getMimeMessage().send(call)
     }
 
+    fun isSaved(): Boolean {
+        return getMimeMessage().isSaved()
+    }
+
     fun setText(text: String, html: Boolean = false) {
         val part = if (isMultipart()) getMainPart() else getMimeMessage()
         if (html) setHtmlText(part, text) else setPlainText(part, text)

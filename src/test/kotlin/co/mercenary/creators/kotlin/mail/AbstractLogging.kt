@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package co.mercenary.creators.kotlin.test.util
+package co.mercenary.creators.kotlin.mail
 
 abstract class AbstractLogging : mu.KLogging() {
 

@@ -61,6 +61,7 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
 
     fun <S : MailMessageSender> send(builder: Builder<S>) = send(builder.build())
 
+    @MailDsl
     abstract inner class MailMessageBuilder(private val mail: MailMessage<*>) {
 
         fun from(from: String) {
@@ -92,6 +93,7 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
         }
     }
 
+    @MailDsl
     inner class TextMailMessageBuilder(private val text: TextMailMessage) : MailMessageBuilder(text) {
 
         fun body(data: CharSequence) {
@@ -127,6 +129,7 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
         }
     }
 
+    @MailDsl
     inner class MimeMailMessageBuilder(private val mime: MimeMailMessage) : MailMessageBuilder(mime) {
 
         fun body(block: MimeMailMessageBodyBuilder.() -> Unit) {
@@ -137,6 +140,7 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
         }
     }
 
+    @MailDsl
     inner class MimeMailMessageBodyBuilder(private val body: MimeMailMessageBody) {
 
         fun message(data: CharSequence) {
@@ -219,8 +223,8 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
             inline(name, ByteArrayContentResource(data, name, getContentTypeProbe().getContentType(name, type)))
         }
 
-        fun inline(name: String, make: () ->  ContentResource) {
-            inline(name, make.invoke())
+        fun inline(name: String, make: (String) -> ContentResource) {
+            inline(name, make.invoke(name))
         }
 
         fun inline(name: String, data: ContentResource) {
@@ -243,8 +247,8 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
             attach(name, ByteArrayContentResource(data, name, getContentTypeProbe().getContentType(name, type)))
         }
 
-        fun attach(name: String, make: () ->  ContentResource) {
-            attach(name, make.invoke())
+        fun attach(name: String, make: (String) -> ContentResource) {
+            attach(name, make.invoke(name))
         }
 
         fun attach(name: String, data: ContentResource) {

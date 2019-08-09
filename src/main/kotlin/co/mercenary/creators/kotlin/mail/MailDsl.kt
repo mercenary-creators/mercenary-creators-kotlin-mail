@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-body {
-    margin: 0;
-    padding: 0;
-}
+package co.mercenary.creators.kotlin.mail
+
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+@DslMarker
+annotation class MailDsl

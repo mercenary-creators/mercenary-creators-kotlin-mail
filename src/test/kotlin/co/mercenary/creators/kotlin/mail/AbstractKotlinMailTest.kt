@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package co.mercenary.creators.kotlin.test.util
+package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.mail.*
 import co.mercenary.creators.kotlin.util.*
 import java.util.*
 
-abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
+abstract class AbstractKotlinMailTest(val many: Int = 16) : AbstractKotlinTest() {
 
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
-            DefaultContentResourceLoader().getContentResource("file:/opt/development/properties/mercenary-creators-core/mail-test.properties").toInputStream().use { prop.load(it) }
+            loader["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].cache().toInputStream().use { prop.load(it) }
         }
     }
 

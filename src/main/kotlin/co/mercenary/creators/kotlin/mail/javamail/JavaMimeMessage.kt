@@ -28,7 +28,6 @@ open class JavaMimeMessage : MimeMessage {
     }
 
     fun send(call: Transport) {
-        saveChanges()
         call.sendMessage(this, getEveryone())
     }
 

@@ -16,20 +16,18 @@
 
 package co.mercenary.creators.kotlin.test.mail
 
-import co.mercenary.creators.kotlin.mail.Mail
-import co.mercenary.creators.kotlin.test.util.AbstractKotlinMailTest
-import co.mercenary.creators.kotlin.util.ClassPathContentResource
+import co.mercenary.creators.kotlin.mail.*
 import org.junit.jupiter.api.Test
 
 class MailCacheTest : AbstractKotlinMailTest() {
     @Test
-    fun text() {
+    fun test() {
         val send = getMailMessageSender()
-        val docs = ClassPathContentResource("test.pdf").toContentCache()
-        val dune = ClassPathContentResource("dune.jpg").toContentCache()
-        val dean = ClassPathContentResource("dean.html").toContentCache()
+        val docs = loader["test.pdf"].cache()
+        val dune = loader["dune.jpg"].cache()
+        val dean = loader["dean.html"].cache()
         val mail = Mail {
-            repeat(8) { index ->
+            repeat(many) { index ->
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
@@ -47,8 +45,8 @@ class MailCacheTest : AbstractKotlinMailTest() {
             mail.send(send)
         }
         info { list.size }
-        list.size.shouldBe(8) {
-            list.size
-        }
+        list.size shouldBe many
+        val size = list.filter { it.isValid().not() }.size
+        info { size }
     }
 }
