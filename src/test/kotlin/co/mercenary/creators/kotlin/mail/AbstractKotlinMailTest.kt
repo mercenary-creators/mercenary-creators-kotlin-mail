@@ -19,7 +19,7 @@ package co.mercenary.creators.kotlin.mail
 import co.mercenary.creators.kotlin.util.*
 import java.util.*
 
-abstract class AbstractKotlinMailTest(val many: Int = 16) : AbstractKotlinTest() {
+abstract class AbstractKotlinMailTest(val many: Int = 8) : AbstractKotlinTest() {
 
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->

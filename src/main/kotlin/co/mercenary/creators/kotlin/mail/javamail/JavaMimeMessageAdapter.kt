@@ -18,7 +18,7 @@ package co.mercenary.creators.kotlin.mail.javamail
 
 import co.mercenary.creators.kotlin.mail.MimeMode
 import co.mercenary.creators.kotlin.util.*
-import co.mercenary.creators.kotlin.util.io.ContentResource
+import co.mercenary.creators.kotlin.util.io.*
 import java.util.*
 import javax.activation.*
 import javax.mail.*
@@ -181,7 +181,7 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
             override fun getName() = name
             override fun getInputStream() = data.getInputStream()
             override fun getContentType() = data.getContentType()
-            override fun getOutputStream() = data.getOutputStream()
+            override fun getOutputStream() = EmptyOutputStream.INSTANCE
         }
     }
 }

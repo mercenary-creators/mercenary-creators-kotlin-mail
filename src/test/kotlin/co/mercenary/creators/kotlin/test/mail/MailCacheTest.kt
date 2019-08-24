@@ -17,6 +17,7 @@
 package co.mercenary.creators.kotlin.test.mail
 
 import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.Test
 
 class MailCacheTest : AbstractKotlinMailTest() {

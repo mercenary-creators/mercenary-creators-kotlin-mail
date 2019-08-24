@@ -17,7 +17,6 @@
 package co.mercenary.creators.kotlin.mail
 
 import co.mercenary.creators.kotlin.util.*
-import co.mercenary.creators.kotlin.util.io.ContentResource
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
 import java.util.*
@@ -29,8 +28,6 @@ abstract class AbstractKotlinTest : AbstractLogging() {
     private val conf: Properties by lazy {
         getConfigPropertiesBuilder().invoke()
     }
-
-    fun ContentResource.cache() = toContentCache()
 
     protected open fun getConfigPropertiesBuilder(): () -> Properties = { Properties() }
 
