@@ -23,16 +23,17 @@ import org.junit.jupiter.api.Test
 class MailCacheTest : AbstractKotlinMailTest() {
     @Test
     fun test() {
+        val many = getMailMessageRepeat()
         val send = getMailMessageSender()
         val docs = loader["test.pdf"].cache()
         val dune = loader["dune.jpg"].cache()
         val dean = loader["dean.html"].cache()
         val mail = Mail {
-            repeat(many) { index ->
+            repeat(many) {
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
-                    subject("Subject: Mime Message Attach HTML $index")
+                    subject("Subject: Mime Message Attach HTML $it")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
                         html(dean)

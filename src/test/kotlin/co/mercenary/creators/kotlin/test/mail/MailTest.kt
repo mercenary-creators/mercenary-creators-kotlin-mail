@@ -22,13 +22,14 @@ import org.junit.jupiter.api.Test
 class MailTest : AbstractKotlinMailTest() {
     @Test
     fun test() {
+        val many = getMailMessageRepeat()
         val send = getMailMessageSender()
         val mail = Mail {
-            repeat(many) { index ->
+            repeat(many) {
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
-                    subject("Subject: Mime Message Attach HTML $index")
+                    subject("Subject: Mime Message Attach HTML $it")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
                         html(loader["dean.html"])

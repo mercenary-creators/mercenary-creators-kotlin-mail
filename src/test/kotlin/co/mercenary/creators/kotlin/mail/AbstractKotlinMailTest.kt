@@ -18,8 +18,9 @@ package co.mercenary.creators.kotlin.mail
 
 import co.mercenary.creators.kotlin.util.*
 import java.util.*
+import kotlin.math.*
 
-abstract class AbstractKotlinMailTest(val many: Int = 8) : AbstractKotlinTest() {
+abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
@@ -27,13 +28,13 @@ abstract class AbstractKotlinMailTest(val many: Int = 8) : AbstractKotlinTest() 
         }
     }
 
-    protected open fun getMailMessageSender(): MailMessageSender {
-        return MailMessageSenderBuilder {
-            port(587)
-            host("smtp.gmail.com")
-            username(getConfigProperty("co.mercenary.creators.core.test.mail.user"))
-            password(getConfigProperty("co.mercenary.creators.core.test.mail.pass"))
-            configuration("mail.smtp.auth" to true, "mail.smtp.starttls.enable" to true)
-        }.build()
+    fun getMailMessageRepeat(many: Int = 8): Int = abs(min(getConfigProperty("co.mercenary.creators.core.test.mail.many").toIntOrNull().orElse { abs(many) }, 64))
+
+    protected open fun getMailMessageSender(): MailMessageSenderBuilder = MailMessageSenderBuilder {
+        port(587)
+        host("smtp.gmail.com")
+        username(getConfigProperty("co.mercenary.creators.core.test.mail.user"))
+        password(getConfigProperty("co.mercenary.creators.core.test.mail.pass"))
+        configuration("mail.smtp.auth" to true, "mail.smtp.starttls.enable" to true)
     }
 }

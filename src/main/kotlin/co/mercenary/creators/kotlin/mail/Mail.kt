@@ -27,7 +27,7 @@ import java.nio.file.Path
 import java.util.*
 import javax.mail.internet.InternetAddress
 
-class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), block: Mail.() -> Unit) : Validated {
+class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), @MailDsl block: Mail.() -> Unit) : Validated {
 
     private val messages = arrayListOf<MailMessage<*>>()
 
@@ -35,14 +35,14 @@ class Mail(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), bloc
         block(this)
     }
 
-    fun text(block: TextMailMessageBuilder.() -> Unit) {
+    fun text(@MailDsl block: TextMailMessageBuilder.() -> Unit) {
         TextMailMessage().also {
             TextMailMessageBuilder(it).apply(block)
             messages += it
         }
     }
 
-    fun mime(block: MimeMailMessageBuilder.() -> Unit) {
+    fun mime(@MailDsl block: MimeMailMessageBuilder.() -> Unit) {
         MimeMailMessage().also {
             MimeMailMessageBuilder(it).apply(block)
             messages += it
