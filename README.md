@@ -11,13 +11,13 @@ Maven:
 <dependency>
   <groupId>co.mercenary-creators</groupId>
   <artifactId>mercenary-creators-kotlin-mail</artifactId>
-  <version>7.0.5-SNAPSHOT</version>
+  <version>8.0.0-SNAPSHOT</version>
 </dependency>
 ```
 Gradle:
 ```
 dependencies {
-    compile(group: 'co.mercenary-creators', name: 'mercenary-creators-kotlin-mail', version: '7.0.5-SNAPSHOT')
+    compile(group: 'co.mercenary-creators', name: 'mercenary-creators-kotlin-mail', version: '8.0.0-SNAPSHOT')
 }
 ```
 

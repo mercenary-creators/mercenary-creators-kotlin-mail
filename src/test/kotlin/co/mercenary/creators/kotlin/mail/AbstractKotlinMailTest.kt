@@ -24,7 +24,7 @@ abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
-            loader["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].cache().toInputStream().use { prop.load(it) }
+            RESOURCE_LOADER["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].cache().toInputStream().use { prop.load(it) }
         }
     }
 

@@ -25,9 +25,9 @@ class MailCacheTest : AbstractKotlinMailTest() {
     fun test() {
         val many = getMailMessageRepeat()
         val send = getMailMessageSender()
-        val docs = loader["test.pdf"].cache()
-        val dune = loader["dune.jpg"].cache()
-        val dean = loader["dean.html"].cache()
+        val docs = RESOURCE_LOADER["test.pdf"].cache()
+        val dune = RESOURCE_LOADER["dune.jpg"].cache()
+        val dean = RESOURCE_LOADER["dean.html"].cache()
         val mail = Mail {
             repeat(many) {
                 mime {

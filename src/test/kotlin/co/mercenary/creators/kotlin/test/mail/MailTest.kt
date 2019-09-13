@@ -17,6 +17,7 @@
 package co.mercenary.creators.kotlin.test.mail
 
 import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.Test
 
 class MailTest : AbstractKotlinMailTest() {
@@ -32,9 +33,9 @@ class MailTest : AbstractKotlinMailTest() {
                     subject("Subject: Mime Message Attach HTML $it")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
-                        html(loader["dean.html"])
-                        attach("test.pdf", loader["test.pdf"])
-                        inline("dune.jpg", loader["dune.jpg"])
+                        html(RESOURCE_LOADER["dean.html"])
+                        attach("test.pdf", RESOURCE_LOADER["test.pdf"])
+                        inline("dune.jpg", RESOURCE_LOADER["dune.jpg"])
                     }
                 }
             }

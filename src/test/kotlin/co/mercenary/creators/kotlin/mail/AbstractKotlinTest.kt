@@ -21,9 +21,7 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.function.Executable
 import java.util.*
 
-abstract class AbstractKotlinTest : AbstractLogging() {
-
-    val loader = DefaultContentResourceLoader()
+abstract class AbstractKotlinTest : Logging() {
 
     private val conf: Properties by lazy {
         getConfigPropertiesBuilder().invoke()
@@ -110,6 +108,4 @@ abstract class AbstractKotlinTest : AbstractLogging() {
     fun <T : Any> (() -> T?).shouldNotBe(value: Any?, block: () -> Any?) = assertNotEquals(value, this.invoke(), block)
 
     fun <T : Any> (() -> T?).shouldNotBe(value: () -> Any?, block: () -> Any?) = assertNotEquals(value.invoke(), this.invoke(), block)
-
-    fun <T> timed(block: () -> T): T = timed({ info { it } }, block)
 }
