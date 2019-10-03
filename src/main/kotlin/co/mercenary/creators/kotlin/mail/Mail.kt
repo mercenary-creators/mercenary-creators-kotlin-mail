@@ -268,7 +268,7 @@ class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeP
                 InternetAddress(text, true)
             }
             catch (cause: Throwable) {
-                Throwables.assert(cause)
+                Throwables.thrown(cause)
                 null
             }
         }

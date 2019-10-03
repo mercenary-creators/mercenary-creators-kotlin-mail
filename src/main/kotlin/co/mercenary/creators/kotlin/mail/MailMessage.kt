@@ -37,6 +37,6 @@ interface MailMessage<BODY> : Validated {
     fun setReplyTo(repl: String)
     fun getSubject(): String?
     fun setSubject(subj: String)
-    fun setBody(body: BODY)
+    fun setBody(body: BODY?)
     fun getBody(): BODY?
 }

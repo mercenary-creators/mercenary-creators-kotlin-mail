@@ -39,7 +39,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
 
     override fun getBody(): BODY? = body
 
-    override fun setBody(body: BODY) {
+    override fun setBody(body: BODY?) {
         this.body = body
     }
 

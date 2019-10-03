@@ -98,7 +98,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                     MailMessageSenderResultData(mime.getId(), mime.getDate(), true)
                 }
                 catch (cause: Throwable) {
-                    Throwables.assert(cause)
+                    Throwables.thrown(cause)
                     MailMessageSenderResultData(message = cause.toString())
                 }
             }
@@ -165,7 +165,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                         it.close()
                     }
                     catch (cause: Throwable) {
-                        Throwables.assert(cause)
+                        Throwables.thrown(cause)
                     }
                 }
             }
