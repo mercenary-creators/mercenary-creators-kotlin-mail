@@ -28,13 +28,14 @@ abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
         }
     }
 
-    fun getMailMessageRepeat(many: Int = 8): Int = abs(min(getConfigProperty("co.mercenary.creators.core.test.mail.many").toIntOrNull().orElse { abs(many) }, 64))
+    @JvmOverloads
+    protected open fun getMailMessageRepeat(many: Int = 8): Int = abs(min(getConfigProperty("co.mercenary.creators.core.test.mail.many").toIntOrNull().orElse { abs(many) }, 64))
 
-    protected open fun getMailMessageSender(): MailMessageSenderBuilder = MailMessageSenderBuilder {
+    protected open fun getMailMessageSender(): MailMessageSender = MailMessageSenderBuilder {
         port(587)
         host("smtp.gmail.com")
         username(getConfigProperty("co.mercenary.creators.core.test.mail.user"))
         password(getConfigProperty("co.mercenary.creators.core.test.mail.pass"))
         configuration("mail.smtp.auth" to true, "mail.smtp.starttls.enable" to true)
-    }
+    }.build()
 }

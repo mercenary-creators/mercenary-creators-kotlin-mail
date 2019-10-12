@@ -18,7 +18,7 @@ package co.mercenary.creators.kotlin.mail
 
 import kotlin.annotation.AnnotationTarget.*
 
-@Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.BINARY)
 @Target(CLASS, FUNCTION, VALUE_PARAMETER, PROPERTY, CONSTRUCTOR)
 @DslMarker
 annotation class MailDsl

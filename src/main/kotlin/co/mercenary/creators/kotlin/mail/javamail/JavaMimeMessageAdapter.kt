@@ -16,52 +16,57 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
-import co.mercenary.creators.kotlin.mail.MimeMode
-import co.mercenary.creators.kotlin.util.*
+import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.util.MercenaryExceptiion
 import co.mercenary.creators.kotlin.util.io.*
 import java.util.*
 import javax.activation.*
 import javax.mail.*
 import javax.mail.internet.*
 
-class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
+class JavaMimeMessageAdapter @JvmOverloads constructor(private val mime: JavaMimeMessage, mode: MimeMode = MimeMode.NONE) {
+
+    @JvmOverloads
+    constructor(session: Session, mode: MimeMode = MimeMode.NONE) : this(JavaMimeMessage(session), mode)
 
     private var root: MimeMultipart? = null
 
     private var main: MimeMultipart? = null
 
-    constructor(session: Session, mode: MimeMode = MimeMode.NONE) : this(JavaMimeMessage(session), mode)
-
-    constructor(mime: JavaMimeMessage, mode: MimeMode = MimeMode.NONE) : this(mime) {
+    init {
         when (mode) {
             MimeMode.NONE -> {
-                setMimeMessageParts(root = null, main = null)
+                setMimeMessageParts(null)
             }
             MimeMode.MIXED -> {
-                val root = MimeMultipart("mixed")
-                getMimeMessage().setContent(root)
-                setMimeMessageParts(root = root, main = root)
+                MimeMultipart("mixed").also { root ->
+                    mime.setContent(root)
+                    setMimeMessageParts(root)
+                }
             }
             MimeMode.RELATED -> {
-                val root = MimeMultipart("related")
-                getMimeMessage().setContent(root)
-                setMimeMessageParts(root = root, main = root)
+                MimeMultipart("related").also { root ->
+                    mime.setContent(root)
+                    setMimeMessageParts(root)
+                }
             }
             MimeMode.MIXED_RELATED -> {
-                val root = MimeMultipart("mixed")
-                getMimeMessage().setContent(root)
-                val main = MimeMultipart("related")
-                val body = MimeBodyPart()
-                body.setContent(main)
-                root.addBodyPart(body)
-                setMimeMessageParts(root = root, main = main)
+                MimeMultipart("mixed").also { root ->
+                    mime.setContent(root)
+                    MimeMultipart("related").also { main ->
+                        MimeBodyPart().also { body ->
+                            body.setContent(main)
+                            root.addBodyPart(body)
+                        }
+                        setMimeMessageParts(root, main)
+                    }
+                }
             }
         }
     }
 
-    fun getMimeMessage() = mime
-
-    fun setMimeMessageParts(root: MimeMultipart?, main: MimeMultipart?) {
+    @JvmOverloads
+    fun setMimeMessageParts(root: MimeMultipart?, main: MimeMultipart? = root) {
         this.root = root
         this.main = main
     }
@@ -73,43 +78,50 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
     fun getMainMimeMultipart(): MimeMultipart = main ?: throw MercenaryExceptiion("main")
 
     fun setSubject(text: String?) {
-        getMimeMessage().subject = text ?: EMPTY_STRING
+        mime.subject = text ?: EMPTY_MAIL_SUBJECT
     }
 
     fun setFrom(from: InternetAddress) {
-        getMimeMessage().setFrom(from)
+        mime.setFrom(from)
+    }
+
+    fun addFrom(list: Array<InternetAddress>) {
+        if (list.isNotEmpty()) {
+            mime.addFrom(list)
+        }
     }
 
     fun setReplyTo(back: InternetAddress) {
-        getMimeMessage().replyTo = arrayOf(back)
+        mime.replyTo = arrayOf(back)
     }
 
     fun setRecipients(type: Message.RecipientType, list: Array<InternetAddress>) {
         if (list.isNotEmpty()) {
-            getMimeMessage().setRecipients(type, list)
+            mime.setRecipients(type, list)
         }
     }
 
-    fun getDate(): Date? = getMimeMessage().sentDate
+    fun getDate(): Date? = mime.sentDate
 
     fun setDate(date: Date?) {
         if (date != null) {
-            getMimeMessage().sentDate = date
+            mime.sentDate = date
         }
     }
 
-    fun getId(): String? = getMimeMessage().messageID
+    fun getId(): String? = mime.messageID
 
-    fun send(call: Transport) {
-        getMimeMessage().send(call)
+    fun send(call: Transport): Boolean {
+        return mime.send(call)
     }
 
     fun isSaved(): Boolean {
-        return getMimeMessage().isSaved()
+        return mime.saved
     }
 
+    @JvmOverloads
     fun setText(text: String, html: Boolean = false) {
-        val part = if (isMultipart()) getMainPart() else getMimeMessage()
+        val part = if (isMultipart()) getMainPart() else mime
         if (html) setHtmlText(part, text) else setPlainText(part, text)
     }
 
@@ -167,7 +179,7 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
         addDataSource(name, data, MimeBodyPart.ATTACHMENT, getRootMimeMultipart())
     }
 
-    internal fun addDataSource(name: String, data: ContentResource, disposition: String, part: MimeMultipart) {
+    private fun addDataSource(name: String, data: ContentResource, disposition: String, part: MimeMultipart) {
         MimeBodyPart().also { body ->
             body.fileName = MimeUtility.encodeText(name)
             body.disposition = disposition
@@ -176,12 +188,12 @@ class JavaMimeMessageAdapter(private val mime: JavaMimeMessage) {
         }
     }
 
-    internal fun getDataSource(name: String, data: ContentResource): DataSource {
+    private fun getDataSource(name: String, data: ContentResource): DataSource {
         return object : DataSource {
             override fun getName() = name
             override fun getInputStream() = data.getInputStream()
             override fun getContentType() = data.getContentType()
-            override fun getOutputStream() = EmptyOutputStream.INSTANCE
+            override fun getOutputStream() = if (data is OutputContentResource) data.getOutputStream() else EmptyOutputStream.INSTANCE
         }
     }
 }

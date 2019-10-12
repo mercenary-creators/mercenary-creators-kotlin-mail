@@ -21,13 +21,37 @@ import java.util.*
 
 interface MailMessage<BODY> : Validated {
     fun addTo(list: List<String>)
+    fun addTo(vararg list: String) {
+        if (list.isNotEmpty()) {
+            addTo(arrayListOf(*list))
+        }
+    }
     fun setTo(list: List<String>)
+    fun setTo(vararg list: String) {
+        setTo(arrayListOf(*list))
+    }
     fun getTo(): List<String>
     fun addCc(list: List<String>)
+    fun addCc(vararg list: String) {
+        if (list.isNotEmpty()) {
+            addCc(arrayListOf(*list))
+        }
+    }
     fun setCc(list: List<String>)
+    fun setCc(vararg list: String) {
+        setCc(arrayListOf(*list))
+    }
     fun getCc(): List<String>
     fun addBcc(list: List<String>)
+    fun addBcc(vararg list: String) {
+        if (list.isNotEmpty()) {
+            addBcc(arrayListOf(*list))
+        }
+    }
     fun setBcc(list: List<String>)
+    fun setBcc(vararg list: String) {
+        setBcc(arrayListOf(*list))
+    }
     fun getBcc(): List<String>
     fun getDate(): Date?
     fun setDate(date: Date)
@@ -37,6 +61,6 @@ interface MailMessage<BODY> : Validated {
     fun setReplyTo(repl: String)
     fun getSubject(): String?
     fun setSubject(subj: String)
-    fun setBody(body: BODY?)
+    fun setBody(body: BODY)
     fun getBody(): BODY?
 }

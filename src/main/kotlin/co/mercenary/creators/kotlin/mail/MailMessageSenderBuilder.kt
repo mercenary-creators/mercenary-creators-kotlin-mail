@@ -16,14 +16,14 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.DefaultMailMessageSender
+import co.mercenary.creators.kotlin.util.io.InputStreamSupplier
 import co.mercenary.creators.kotlin.util.type.Builder
 import java.io.*
 import java.net.URL
 import java.util.*
 
 @MailDsl
-class MailMessageSenderBuilder(private val sender: ConfigurableMailMessageSender = DefaultMailMessageSender(), block: MailMessageSenderBuilder.() -> Unit) : Builder<ConfigurableMailMessageSender> {
+class MailMessageSenderBuilder @JvmOverloads constructor(private val sender: ConfigurableMailMessageSender = DefaultMailMessageSender(), block: MailMessageSenderBuilder.() -> Unit) : Builder<ConfigurableMailMessageSender> {
 
     init {
         block(this)
@@ -58,6 +58,10 @@ class MailMessageSenderBuilder(private val sender: ConfigurableMailMessageSender
     }
 
     fun configuration(data: InputStream) {
+        sender.setConfiguration(data)
+    }
+
+    fun configuration(data: InputStreamSupplier) {
         sender.setConfiguration(data)
     }
 

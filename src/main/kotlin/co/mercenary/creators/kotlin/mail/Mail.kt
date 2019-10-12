@@ -27,7 +27,7 @@ import java.nio.file.Path
 import java.util.*
 import javax.mail.internet.InternetAddress
 
-class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), @MailDsl block: Mail.() -> Unit) : Validated {
+class Mail @JvmOverloads constructor(private val probe: ContentTypeProbe = DefaultContentTypeProbe(), @MailDsl block: Mail.() -> Unit) : Validated {
 
     private val messages = arrayListOf<MailMessage<*>>()
 
@@ -76,14 +76,27 @@ class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeP
             mail.addTo(list)
         }
 
+        fun to(vararg list: String) {
+            mail.addTo(*list)
+        }
+
         fun cc(list: List<String>) {
             mail.addCc(list)
+        }
+
+        fun cc(vararg list: String) {
+            mail.addCc(*list)
         }
 
         fun bcc(list: List<String>) {
             mail.addBcc(list)
         }
 
+        fun bcc(vararg list: String) {
+            mail.addBcc(*list)
+        }
+
+        @JvmOverloads
         fun date(date: Date = Date()) {
             mail.setDate(date)
         }
@@ -104,26 +117,32 @@ class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeP
             text.setBody(data.invoke())
         }
 
+        @JvmOverloads
         fun body(data: ByteArray, charset: Charset = Charsets.UTF_8) {
             text.setBody(String(data, charset))
         }
 
+        @JvmOverloads
         fun body(data: URL, charset: Charset = Charsets.UTF_8) {
             body(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun body(data: File, charset: Charset = Charsets.UTF_8) {
             body(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun body(data: Path, charset: Charset = Charsets.UTF_8) {
             body(data.toFile(), charset)
         }
 
+        @JvmOverloads
         fun body(data: InputStream, charset: Charset = Charsets.UTF_8) {
             body(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun body(data: InputStreamSupplier, charset: Charset = Charsets.UTF_8) {
             body(data.getInputStream(), charset)
         }
@@ -151,26 +170,32 @@ class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeP
             body.setMessageBodyText(data.invoke())
         }
 
+        @JvmOverloads
         fun message(data: ByteArray, charset: Charset = Charsets.UTF_8) {
             body.setMessageBodyText(String(data, charset))
         }
 
+        @JvmOverloads
         fun message(data: URL, charset: Charset = Charsets.UTF_8) {
             message(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun message(data: File, charset: Charset = Charsets.UTF_8) {
             message(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun message(data: Path, charset: Charset = Charsets.UTF_8) {
             message(data.toFile(), charset)
         }
 
+        @JvmOverloads
         fun message(data: InputStream, charset: Charset = Charsets.UTF_8) {
             message(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun message(data: InputStreamSupplier, charset: Charset = Charsets.UTF_8) {
             message(data.getInputStream(), charset)
         }
@@ -183,42 +208,52 @@ class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeP
             body.setMessageBodyHtml(data.invoke())
         }
 
+        @JvmOverloads
         fun html(data: ByteArray, charset: Charset = Charsets.UTF_8) {
             body.setMessageBodyHtml(String(data, charset))
         }
 
+        @JvmOverloads
         fun html(data: URL, charset: Charset = Charsets.UTF_8) {
             html(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun html(data: File, charset: Charset = Charsets.UTF_8) {
             html(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun html(data: Path, charset: Charset = Charsets.UTF_8) {
             html(data.toFile(), charset)
         }
 
+        @JvmOverloads
         fun html(data: InputStream, charset: Charset = Charsets.UTF_8) {
             html(data.toByteArray(), charset)
         }
 
+        @JvmOverloads
         fun html(data: InputStreamSupplier, charset: Charset = Charsets.UTF_8) {
             html(data.getInputStream(), charset)
         }
 
+        @JvmOverloads
         fun inline(name: String, data: URL, type: String = DEFAULT_CONTENT_TYPE) {
             inline(name, URLContentResource(data, getContentTypeProbe().getContentType(data, type)))
         }
 
+        @JvmOverloads
         fun inline(name: String, data: Path, type: String = DEFAULT_CONTENT_TYPE) {
             inline(name, data.toFile(), type)
         }
 
+        @JvmOverloads
         fun inline(name: String, data: File, type: String = DEFAULT_CONTENT_TYPE) {
             inline(name, FileContentResource(data, getContentTypeProbe().getContentType(data, type)))
         }
 
+        @JvmOverloads
         fun inline(name: String, data: ByteArray, type: String = DEFAULT_CONTENT_TYPE) {
             inline(name, ByteArrayContentResource(data, name, getContentTypeProbe().getContentType(name, type)))
         }
@@ -231,18 +266,22 @@ class Mail constructor(private val probe: ContentTypeProbe = DefaultContentTypeP
             body.addInlinePart(name, data)
         }
 
+        @JvmOverloads
         fun attach(name: String, data: URL, type: String = DEFAULT_CONTENT_TYPE) {
             attach(name, URLContentResource(data, getContentTypeProbe().getContentType(data, type)))
         }
 
+        @JvmOverloads
         fun attach(name: String, data: Path, type: String = DEFAULT_CONTENT_TYPE) {
             attach(name, data.toFile(), type)
         }
 
+        @JvmOverloads
         fun attach(name: String, data: File, type: String = DEFAULT_CONTENT_TYPE) {
             attach(name, FileContentResource(data, getContentTypeProbe().getContentType(data, type)))
         }
 
+        @JvmOverloads
         fun attach(name: String, data: ByteArray, type: String = DEFAULT_CONTENT_TYPE) {
             attach(name, ByteArrayContentResource(data, name, getContentTypeProbe().getContentType(name, type)))
         }

@@ -16,23 +16,38 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
+import co.mercenary.creators.kotlin.util.type.*
 import javax.mail.*
 import javax.mail.internet.MimeMessage
 
-open class JavaMimeMessage : MimeMessage {
-    constructor(session: Session) : super(session)
-    constructor(other: MimeMessage) : super(other)
+class JavaMimeMessage(session: Session) : MimeMessage(session), Validated {
 
-    fun isSaved(): Boolean {
-        return super.saved
+    val saved: Boolean
+        get() = super.saved
+
+    val everyone: Array<Address>
+        get() = recipients()
+
+    fun send(call: Transport): Boolean {
+        val list = everyone
+        if (list.isNotEmpty()) {
+            if (call.isConnected) {
+                call.sendMessage(this, list)
+                return true
+            }
+        }
+        return false
     }
 
-    fun send(call: Transport) {
-        call.sendMessage(this, getEveryone())
+    fun recipients(): Array<Address> {
+        val to = this.getRecipients(Message.RecipientType.TO) ?: emptyArray()
+        val cc = this.getRecipients(Message.RecipientType.CC) ?: emptyArray()
+        val bc = this.getRecipients(Message.RecipientType.BCC) ?: emptyArray()
+        return (to + cc + bc).distinct().filterNotNull().distinct().toTypedArray()
     }
 
-    fun getEveryone(): Array<Address> {
-        return allRecipients ?: emptyArray()
+    override fun isValid(): Boolean {
+        return everyone.isNotEmpty()
     }
 
     override fun createMimeMessage(session: Session): JavaMimeMessage {

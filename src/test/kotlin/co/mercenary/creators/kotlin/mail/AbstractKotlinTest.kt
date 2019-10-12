@@ -29,6 +29,7 @@ abstract class AbstractKotlinTest : Logging() {
 
     protected open fun getConfigPropertiesBuilder(): () -> Properties = { Properties() }
 
+    @JvmOverloads
     fun getConfigProperty(name: String, other: String = EMPTY_STRING): String = conf.getProperty(name, other)
 
     fun assertEach(vararg list: Executable) {

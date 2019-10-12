@@ -16,6 +16,8 @@
 
 @file:kotlin.jvm.JvmName("MailKt")
 
-package co.mercenary.creators.kotlin
+package co.mercenary.creators.kotlin.mail
 
 typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
+
+const val EMPTY_MAIL_SUBJECT = "Subject: none."

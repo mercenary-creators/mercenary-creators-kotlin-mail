@@ -31,6 +31,7 @@ class MailTest : AbstractKotlinMailTest() {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
                     subject("Subject: Mime Message Attach HTML $it")
+                    cc("deansjones@outlook.com")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
                         html(RESOURCE_LOADER["dean.html"])

@@ -32,7 +32,7 @@ interface ConfigurableMailMessageSender : MailMessageSender {
     fun setUserName(username: String?)
     fun getPassword(): String?
     fun setPassword(password: String?)
-    fun getParallelism(size: Int): Int
+    fun getParallelism(parallelism: Int): Int
     fun getMaxParallel(): Int
     fun setMaxParallel(size: Int)
     fun setMaxParallel(calc: () -> Int)

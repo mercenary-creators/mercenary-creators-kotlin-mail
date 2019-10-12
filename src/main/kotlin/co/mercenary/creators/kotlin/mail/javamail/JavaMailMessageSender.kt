@@ -139,17 +139,16 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         }
     }
 
-    override fun getParallelism(size: Int): Int {
-        return max(min(min(abs(size) + 1, (getProcessors() + 1) / 2) / 2, getMaxParallel()), getMinParallel())
+    override fun getParallelism(parallelism: Int): Int {
+        return max(min(min(abs(parallelism).plus(1).div(2).times(2), getProcessors().plus(1).div(2)), getMaxParallel()), getMinParallel())
     }
 
     override fun send(messages: List<MailMessage<*>>): List<MailMessageSenderResult> {
-        val leng = messages.size
-        if (leng < 1) {
-            return listOf()
+        if (messages.isEmpty()) {
+            return emptyList()
         }
         val sess = session
-        val size = getParallelism(leng)
+        val size = getParallelism(messages.size)
         val maps = ConcurrentHashMap<String, Transport>(size)
         try {
             ParallelScheduler("$size-mail-sender", size).also { on ->

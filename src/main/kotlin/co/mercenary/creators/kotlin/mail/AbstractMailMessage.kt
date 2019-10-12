@@ -39,7 +39,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
 
     override fun getBody(): BODY? = body
 
-    override fun setBody(body: BODY?) {
+    override fun setBody(body: BODY) {
         this.body = body
     }
 
@@ -72,7 +72,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
 
     override fun getTo() = to
 
-    final override fun setCc(list: List<String>) {
+    override fun setCc(list: List<String>) {
         cc.clear()
         addCc(list)
     }
