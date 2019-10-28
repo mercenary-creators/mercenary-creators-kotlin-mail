@@ -77,8 +77,8 @@ class JavaMimeMessageAdapter @JvmOverloads constructor(private val mime: JavaMim
 
     fun getMainMimeMultipart(): MimeMultipart = main ?: throw MercenaryExceptiion("main")
 
-    fun setSubject(text: String?) {
-        mime.subject = text ?: EMPTY_MAIL_SUBJECT
+    fun setSubject(text: String) {
+        mime.subject = text
     }
 
     fun setFrom(from: InternetAddress) {

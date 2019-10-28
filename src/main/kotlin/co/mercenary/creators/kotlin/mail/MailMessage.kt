@@ -20,37 +20,37 @@ import co.mercenary.creators.kotlin.util.type.Validated
 import java.util.*
 
 interface MailMessage<BODY> : Validated {
-    fun addTo(list: List<String>)
+    fun addTo(list: Iterable<String>)
     fun addTo(vararg list: String) {
         if (list.isNotEmpty()) {
-            addTo(arrayListOf(*list))
+            addTo(setOf(*list))
         }
     }
-    fun setTo(list: List<String>)
+    fun setTo(list: Iterable<String>)
     fun setTo(vararg list: String) {
-        setTo(arrayListOf(*list))
+        setTo(setOf(*list))
     }
     fun getTo(): List<String>
-    fun addCc(list: List<String>)
+    fun addCc(list: Iterable<String>)
     fun addCc(vararg list: String) {
         if (list.isNotEmpty()) {
-            addCc(arrayListOf(*list))
+            addCc(setOf(*list))
         }
     }
-    fun setCc(list: List<String>)
+    fun setCc(list: Iterable<String>)
     fun setCc(vararg list: String) {
-        setCc(arrayListOf(*list))
+        setCc(setOf(*list))
     }
     fun getCc(): List<String>
-    fun addBcc(list: List<String>)
+    fun addBcc(list: Iterable<String>)
     fun addBcc(vararg list: String) {
         if (list.isNotEmpty()) {
-            addBcc(arrayListOf(*list))
+            addBcc(setOf(*list))
         }
     }
-    fun setBcc(list: List<String>)
+    fun setBcc(list: Iterable<String>)
     fun setBcc(vararg list: String) {
-        setBcc(arrayListOf(*list))
+        setBcc(setOf(*list))
     }
     fun getBcc(): List<String>
     fun getDate(): Date?
@@ -59,7 +59,7 @@ interface MailMessage<BODY> : Validated {
     fun setFrom(from: String)
     fun getReplyTo(): String?
     fun setReplyTo(repl: String)
-    fun getSubject(): String?
+    fun getSubject(): String
     fun setSubject(subj: String)
     fun setBody(body: BODY)
     fun getBody(): BODY?

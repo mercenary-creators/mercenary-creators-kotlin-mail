@@ -66,13 +66,16 @@ class Mail @JvmOverloads constructor(private val probe: ContentTypeProbe = Defau
 
         fun from(from: String) {
             mail.setFrom(from)
+            if (mail.getReplyTo().isNullOrEmpty()) {
+                mail.setReplyTo(from)
+            }
         }
 
         fun reply(repl: String) {
             mail.setReplyTo(repl)
         }
 
-        fun to(list: List<String>) {
+        fun to(list: Iterable<String>) {
             mail.addTo(list)
         }
 
@@ -80,7 +83,7 @@ class Mail @JvmOverloads constructor(private val probe: ContentTypeProbe = Defau
             mail.addTo(*list)
         }
 
-        fun cc(list: List<String>) {
+        fun cc(list: Iterable<String>) {
             mail.addCc(list)
         }
 
@@ -88,7 +91,7 @@ class Mail @JvmOverloads constructor(private val probe: ContentTypeProbe = Defau
             mail.addCc(*list)
         }
 
-        fun bcc(list: List<String>) {
+        fun bcc(list: Iterable<String>) {
             mail.addBcc(list)
         }
 
@@ -313,7 +316,7 @@ class Mail @JvmOverloads constructor(private val probe: ContentTypeProbe = Defau
         }
 
         @JvmStatic
-        fun addresses(addresses: List<String>): Array<InternetAddress> {
+        fun addresses(addresses: Iterable<String>): Array<InternetAddress> {
             return addresses.distinct().mapNotNull { address(it) }.toTypedArray()
         }
     }

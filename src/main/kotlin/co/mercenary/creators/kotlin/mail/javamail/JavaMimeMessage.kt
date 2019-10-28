@@ -20,7 +20,7 @@ import co.mercenary.creators.kotlin.util.type.*
 import javax.mail.*
 import javax.mail.internet.MimeMessage
 
-class JavaMimeMessage(session: Session) : MimeMessage(session), Validated {
+class JavaMimeMessage(session: Session) : MimeMessage(session){
 
     val saved: Boolean
         get() = super.saved
@@ -44,10 +44,6 @@ class JavaMimeMessage(session: Session) : MimeMessage(session), Validated {
         val cc = this.getRecipients(Message.RecipientType.CC) ?: emptyArray()
         val bc = this.getRecipients(Message.RecipientType.BCC) ?: emptyArray()
         return (to + cc + bc).distinct().filterNotNull().distinct().toTypedArray()
-    }
-
-    override fun isValid(): Boolean {
-        return everyone.isNotEmpty()
     }
 
     override fun createMimeMessage(session: Session): JavaMimeMessage {

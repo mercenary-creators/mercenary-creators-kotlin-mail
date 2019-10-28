@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-@file:kotlin.jvm.JvmName("MailKt")
-
 package co.mercenary.creators.kotlin.mail
 
-typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
+import co.mercenary.creators.kotlin.util.uuid
 
-fun getThreadName(): String = Thread.currentThread().name
+interface MailMessagePublisher : AutoCloseable {
+    fun send(send: MailMessage<*>, name: String = uuid())
+    fun subscribe(func: (MailMessageSenderResult, String) -> Unit)
+}

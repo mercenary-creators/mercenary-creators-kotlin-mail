@@ -31,11 +31,11 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
 
     private var subj: String? = null
 
-    private val to = mutableListOf<String>()
+    private val to = mutableSetOf<String>()
 
-    private val cc = mutableListOf<String>()
+    private val cc = mutableSetOf<String>()
 
-    private val bc = mutableListOf<String>()
+    private val bc = mutableSetOf<String>()
 
     override fun getBody(): BODY? = body
 
@@ -49,7 +49,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
         this.from = Mail.parse(from)
     }
 
-    override fun getSubject() = subj
+    override fun getSubject() = subj.orElse { "Subject:" }
 
     override fun setSubject(subj: String) {
         this.subj = subj
@@ -61,38 +61,38 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
         this.repl = Mail.parse(repl)
     }
 
-    override fun setTo(list: List<String>) {
+    override fun setTo(list: Iterable<String>) {
         to.clear()
         addTo(list)
     }
 
-    override fun addTo(list: List<String>) {
+    override fun addTo(list: Iterable<String>) {
         append(to, list)
     }
 
-    override fun getTo() = to
+    override fun getTo() = to.distinct()
 
-    override fun setCc(list: List<String>) {
+    override fun setCc(list: Iterable<String>) {
         cc.clear()
         addCc(list)
     }
 
-    override fun addCc(list: List<String>) {
+    override fun addCc(list: Iterable<String>) {
         append(cc, list)
     }
 
-    override fun getCc() = cc
+    override fun getCc() = cc.distinct()
 
-    override fun setBcc(list: List<String>) {
+    override fun setBcc(list: Iterable<String>) {
         bc.clear()
         addBcc(list)
     }
 
-    override fun addBcc(list: List<String>) {
+    override fun addBcc(list: Iterable<String>) {
         append(bc, list)
     }
 
-    override fun getBcc() = bc
+    override fun getBcc() = bc.distinct()
 
     override fun setDate(date: Date) {
         this.date = date.copyOf()
@@ -104,7 +104,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
         return (Mail.parse(getFrom()) != null) && (getTo().isNotEmpty()) && isValid(getBody())
     }
 
-    protected fun append(send: MutableList<String>, list: List<String>) {
+    private fun append(send: MutableSet<String>, list: Iterable<String>) {
         send += list.mapNotNull { Mail.parse(it) }.distinct()
     }
 }

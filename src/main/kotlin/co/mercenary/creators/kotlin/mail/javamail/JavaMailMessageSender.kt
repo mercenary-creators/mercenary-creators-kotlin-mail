@@ -18,6 +18,7 @@ package co.mercenary.creators.kotlin.mail.javamail
 
 import co.mercenary.creators.kotlin.mail.*
 import co.mercenary.creators.kotlin.util.*
+import co.mercenary.creators.kotlin.util.logging.ILogging
 import java.util.concurrent.ConcurrentHashMap
 import javax.mail.*
 import kotlin.math.*
@@ -32,12 +33,16 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         Session.getInstance(getConfiguration())
     }
 
+    protected val logger: ILogging by lazy {
+        LoggingFactory.logger(this)
+    }
+
     protected open fun text(message: MailMessage<*>): String? = if (message.isValid()) {
         when (message) {
             is TextMailMessage -> message.getBody()
             is MimeMailMessage -> when (val body = message.getBody()) {
                 null -> null
-                else -> body.getMessageBodyText() ?: EMPTY_STRING
+                else -> body.getMessageBodyText().orEmpty()
             }
             else -> null
         }
@@ -48,7 +53,9 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         val text = text(message)
         val from = Mail.address(message.getFrom())
         return if ((text != null) && (from != null)) {
-            val call = maps.computeIfAbsent(Thread.currentThread().name) {
+            val uuid = uuid()
+            val tkey = getThreadName()
+            val call = maps.computeIfAbsent(tkey) {
                 getTransport(sess)
             }
             val html = when (message) {
@@ -72,7 +79,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
             mime.setFrom(from)
             mime.setDate(message.getDate())
             mime.setSubject(message.getSubject())
-            mime.setReplyTo(Mail.address(message.getReplyTo()) ?: from)
+            mime.setReplyTo(Mail.address(message.getReplyTo()).orElse { from })
             mime.setRecipients(Message.RecipientType.TO, Mail.addresses(message.getTo()))
             mime.setRecipients(Message.RecipientType.CC, Mail.addresses(message.getCc()))
             mime.setRecipients(Message.RecipientType.BCC, Mail.addresses(message.getBcc()))
@@ -99,6 +106,9 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                 }
                 catch (cause: Throwable) {
                     Throwables.thrown(cause)
+                    logger.error(cause) {
+                        uuid.plus(SPACE_STRING).plus(tkey)
+                    }
                     MailMessageSenderResultData(message = cause.toString())
                 }
             }
@@ -111,20 +121,16 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         }
     }
 
-    override fun getMaxParallel(): Int {
-        return maxcalc()
-    }
+    override fun getMaxParallel() = maxcalc.invoke()
 
     override fun setMaxParallel(calc: () -> Int) {
-        this.maxcalc = calc
+        maxcalc = calc
     }
 
-    override fun getMinParallel(): Int {
-        return mincalc()
-    }
+    override fun getMinParallel() = mincalc.invoke()
 
     override fun setMinParallel(calc: () -> Int) {
-        this.mincalc = calc
+        mincalc = calc
     }
 
     override fun setMaxParallel(size: Int) {
@@ -144,11 +150,12 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
     }
 
     override fun send(messages: List<MailMessage<*>>): List<MailMessageSenderResult> {
-        if (messages.isEmpty()) {
+        val many = messages.size
+        if (many == 0) {
             return emptyList()
         }
         val sess = session
-        val size = getParallelism(messages.size)
+        val size = getParallelism(many)
         val maps = ConcurrentHashMap<String, Transport>(size)
         try {
             ParallelScheduler("$size-mail-sender", size).also { on ->
@@ -171,14 +178,11 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         }
     }
 
-    protected open fun getTransport(session: Session): Transport {
-        var username = getUserName()
-        var password = getPassword()
-        if (username.isNullOrEmpty()) {
-            username = null
-            password = null
+    protected open fun getTransport(session: Session): Transport = session.transport.also {
+        when (val username = toTrimOrNull(getUserName())) {
+            null -> it.connect(getHostName(), getHostPort(), null, null)
+            else -> it.connect(getHostName(), getHostPort(), username, getPassword())
         }
-        return session.transport.also { it.connect(getHostName(), getHostPort(), username, password) }
     }
 
     companion object {

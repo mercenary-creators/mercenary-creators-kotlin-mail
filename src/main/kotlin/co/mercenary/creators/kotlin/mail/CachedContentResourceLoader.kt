@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-@file:kotlin.jvm.JvmName("MailKt")
-
 package co.mercenary.creators.kotlin.mail
 
-typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
+import co.mercenary.creators.kotlin.util.DefaultContentResourceLoader
+import co.mercenary.creators.kotlin.util.io.CachedContentResource
+import java.util.concurrent.ConcurrentHashMap
 
-fun getThreadName(): String = Thread.currentThread().name
+open class CachedContentResourceLoader : DefaultContentResourceLoader() {
+
+    protected val cached = ConcurrentHashMap<String, CachedContentResource>()
+
+    override operator fun get(path: String): CachedContentResource {
+        return cached.computeIfAbsent(path) {
+            super.get(it).toContentCache()
+        }
+    }
+}

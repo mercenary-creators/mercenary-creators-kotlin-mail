@@ -17,7 +17,6 @@
 package co.mercenary.creators.kotlin.test.mail
 
 import co.mercenary.creators.kotlin.mail.*
-import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.Test
 
 class MailTest : AbstractKotlinMailTest() {
@@ -34,9 +33,9 @@ class MailTest : AbstractKotlinMailTest() {
                     cc("deansjones@outlook.com")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
-                        html(RESOURCE_LOADER["dean.html"])
-                        attach("test.pdf", RESOURCE_LOADER["test.pdf"])
-                        inline("dune.jpg", RESOURCE_LOADER["dune.jpg"])
+                        html(contentResourceLoader["dean.htm"])
+                        attach("test.pdf", contentResourceLoader["test.pdf"])
+                        inline("dune.jpg", contentResourceLoader["dune.jpg"])
                     }
                 }
             }

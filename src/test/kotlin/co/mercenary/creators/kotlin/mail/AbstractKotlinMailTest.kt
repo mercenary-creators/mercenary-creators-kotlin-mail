@@ -22,9 +22,11 @@ import kotlin.math.*
 
 abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
+    protected val contentResourceLoader = CachedContentResourceLoader()
+
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
-            RESOURCE_LOADER["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].cache().toInputStream().use { prop.load(it) }
+            contentResourceLoader["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].toInputStream().use { prop.load(it) }
         }
     }
 

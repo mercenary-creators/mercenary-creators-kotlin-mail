@@ -25,9 +25,9 @@ class MimeMailMessageBody : Validated {
 
     private var html: String? = null
 
-    private val attach = LinkedHashMap<String, ContentResource>()
+    private val attach = linkedMapOf<String, ContentResource>()
 
-    private val inline = LinkedHashMap<String, ContentResource>()
+    private val inline = linkedMapOf<String, ContentResource>()
 
     fun getMessageBodyText(): String? = body
 
@@ -41,13 +41,13 @@ class MimeMailMessageBody : Validated {
         this.html = html
     }
 
-    fun getInlineParts(): Map<String, ContentResource> = inline
+    fun getInlineParts(): Map<String, ContentResource> = inline.toMap()
 
     fun addInlinePart(name: String, part: ContentResource) {
         inline[name] = part
     }
 
-    fun getAttachParts(): Map<String, ContentResource> = attach
+    fun getAttachParts(): Map<String, ContentResource> = attach.toMap()
 
     fun addAttachPart(name: String, part: ContentResource) {
         attach[name] = part
