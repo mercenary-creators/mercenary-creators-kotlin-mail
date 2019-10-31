@@ -54,7 +54,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         val from = Mail.address(message.getFrom())
         return if ((text != null) && (from != null)) {
             val uuid = uuid()
-            val tkey = getThreadName()
+            val tkey = getCurrentThreadName()
             val call = maps.computeIfAbsent(tkey) {
                 getTransport(sess)
             }

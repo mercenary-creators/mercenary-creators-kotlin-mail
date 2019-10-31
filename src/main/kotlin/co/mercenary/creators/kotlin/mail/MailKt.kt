@@ -19,5 +19,3 @@
 package co.mercenary.creators.kotlin.mail
 
 typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
-
-fun getThreadName(): String = Thread.currentThread().name
