@@ -17,6 +17,7 @@
 package co.mercenary.creators.kotlin.test.mail
 
 import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.Test
 
 class MailCacheTest : AbstractKotlinMailTest() {
@@ -24,9 +25,9 @@ class MailCacheTest : AbstractKotlinMailTest() {
     fun test() {
         val many = getMailMessageRepeat()
         val send = getMailMessageSender()
-        val docs = contentResourceLoader["test.pdf"]
-        val dune = contentResourceLoader["dune.jpg"]
-        val dean = contentResourceLoader["dean.htm"]
+        val docs = cachedContentResourceLoader["test.pdf"]
+        val dune = cachedContentResourceLoader["dune.jpg"]
+        val dean = cachedContentResourceLoader["dean.htm"]
         val mail = Mail {
             repeat(many) {
                 mime {

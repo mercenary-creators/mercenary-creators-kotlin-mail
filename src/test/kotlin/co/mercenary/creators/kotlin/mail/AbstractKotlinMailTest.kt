@@ -22,8 +22,6 @@ import kotlin.math.*
 
 abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
-    protected val contentResourceLoader = CachedContentResourceLoader()
-
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
             contentResourceLoader["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].toInputStream().use { prop.load(it) }
