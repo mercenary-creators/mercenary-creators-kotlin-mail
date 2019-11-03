@@ -18,6 +18,9 @@ package co.mercenary.creators.kotlin.mail
 
 import co.mercenary.creators.kotlin.util.*
 import co.mercenary.creators.kotlin.util.io.*
+import co.mercenary.creators.kotlin.util.io.ContentResource
+import co.mercenary.creators.kotlin.util.io.ContentTypeProbe
+import co.mercenary.creators.kotlin.util.io.InputStreamSupplier
 import co.mercenary.creators.kotlin.util.type.*
 import co.mercenary.creators.kotlin.util.type.Throwables
 import java.io.*

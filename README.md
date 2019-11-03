@@ -11,13 +11,13 @@ Maven:
 <dependency>
   <groupId>co.mercenary-creators</groupId>
   <artifactId>mercenary-creators-kotlin-mail</artifactId>
-  <version>8.8.9-SNAPSHOT</version>
+  <version>8.9.0-SNAPSHOT</version>
 </dependency>
 ```
 Gradle:
 ```
 dependencies {
-    compile(group: 'co.mercenary-creators', name: 'mercenary-creators-kotlin-mail', version: '8.8.9-SNAPSHOT')
+    compile(group: 'co.mercenary-creators', name: 'mercenary-creators-kotlin-mail', version: '8.9.0-SNAPSHOT')
 }
 ```
 
@@ -37,9 +37,9 @@ dependencies {
                     subject("Subject: Mime Message Attach HTML $index")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
-                        html(getClassPathResource["dean.html"])
-                        attach("test.pdf", getClassPathResource["test.pdf"])
-                        inline("dune.jpg", getClassPathResource["dune.jpg"])
+                        html(getClassPathResource("dean.html"))
+                        attach("test.pdf", getClassPathResource("test.pdf"))
+                        inline("dune.jpg", getClassPathResource("dune.jpg"))
                     }
                 }
             }
