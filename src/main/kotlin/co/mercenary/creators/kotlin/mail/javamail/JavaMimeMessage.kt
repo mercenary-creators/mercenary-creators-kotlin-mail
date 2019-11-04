@@ -16,11 +16,10 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
-import co.mercenary.creators.kotlin.util.type.*
 import javax.mail.*
 import javax.mail.internet.MimeMessage
 
-class JavaMimeMessage(session: Session) : MimeMessage(session){
+class JavaMimeMessage(session: Session) : MimeMessage(session) {
 
     val saved: Boolean
         get() = super.saved

@@ -16,7 +16,7 @@
 
 package co.mercenary.creators.kotlin.mail.javamail
 
-import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.mail.MimeMode
 import co.mercenary.creators.kotlin.util.MercenaryExceptiion
 import co.mercenary.creators.kotlin.util.io.*
 import java.util.*
