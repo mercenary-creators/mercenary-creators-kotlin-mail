@@ -16,8 +16,8 @@
 
 buildscript {
     ext {
-        set('kotlinVersion', '1.3.50')
-        set('MERCENARY_CREATORS_UTIL_VERSION', '9.0.0-SNAPSHOT')
+        set('kotlinVersion', '1.3.60')
+        set('MERCENARY_CREATORS_UTIL_VERSION', '9.1.0-SNAPSHOT')
     }
     repositories {
         mavenCentral()
