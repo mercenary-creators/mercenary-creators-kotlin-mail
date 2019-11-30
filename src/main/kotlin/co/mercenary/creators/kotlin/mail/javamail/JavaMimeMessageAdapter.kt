@@ -193,7 +193,7 @@ class JavaMimeMessageAdapter @JvmOverloads constructor(private val mime: JavaMim
             override fun getName() = name
             override fun getInputStream() = data.getInputStream()
             override fun getContentType() = data.getContentType()
-            override fun getOutputStream() = if (data is OutputContentResource) data.getOutputStream() else EmptyOutputStream.INSTANCE
+            override fun getOutputStream() = if (data is OutputContentResource) data.getOutputStream() else EmptyOutputStream
         }
     }
 }
