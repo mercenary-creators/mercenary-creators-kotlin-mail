@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ * Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,11 @@
 
 package co.mercenary.creators.kotlin.mail
 
-import co.mercenary.creators.kotlin.util.IS_NOT_FOUND
 import java.util.*
 
 abstract class AbstractConfigurableMailMessageSender : ConfigurableMailMessageSender {
 
-    private var hostport = IS_NOT_FOUND
+    private var hostport = -1
 
     private var confdata = Properties()
 

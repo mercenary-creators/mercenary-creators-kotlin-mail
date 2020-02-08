@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ * Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,19 @@ import kotlin.math.*
 
 abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
+    protected val loader = CONTENT_RESOURCE_LOADER
+
+    protected val cached = CACHED_CONTENT_RESOURCE_LOADER
+
+    inline infix fun Int.repeated(block: (Int) -> Unit) {
+        for (index in 0 until this) {
+            block(index)
+        }
+    }
+
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
-            contentResourceLoader["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].toInputStream().use { prop.load(it) }
+            cached["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].toInputStream().use { prop.load(it) }
         }
     }
 

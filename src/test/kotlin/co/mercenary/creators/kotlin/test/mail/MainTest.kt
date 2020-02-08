@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-@file:kotlin.jvm.JvmName("MailKt")
+package co.mercenary.creators.kotlin.test.mail
 
-package co.mercenary.creators.kotlin.mail
+import co.mercenary.creators.kotlin.mail.*
+import co.mercenary.creators.kotlin.util.*
+import org.junit.jupiter.api.Test
 
-typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender
+class MainTest : AbstractKotlinMailTest() {
+    @Test
+    fun test() {
+        val text = TextMailMessage()
+        info { text }
+        info { text isSameAs text }
+        val mime = MimeMailMessage()
+        info { mime }
+        info { mime isSameAs mime }
+        info { mime isNotSameAs text }
+    }
+}

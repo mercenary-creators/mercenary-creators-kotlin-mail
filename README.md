@@ -11,13 +11,13 @@ Maven:
 <dependency>
   <groupId>co.mercenary-creators</groupId>
   <artifactId>mercenary-creators-kotlin-mail</artifactId>
-  <version>9.1.1-SNAPSHOT</version>
+  <version>9.3.5-SNAPSHOT</version>
 </dependency>
 ```
 Gradle:
 ```
 dependencies {
-    compile(group: 'co.mercenary-creators', name: 'mercenary-creators-kotlin-mail', version: '9.1.1-SNAPSHOT')
+    compile(group: 'co.mercenary-creators', name: 'mercenary-creators-kotlin-mail', version: '9.3.5-SNAPSHOT')
 }
 ```
 
@@ -48,7 +48,7 @@ dependencies {
 ```
 License:
 
-Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
 
 Mercenary Creators Kotlin Mail is released under version 2.0 of the Apache License.
 

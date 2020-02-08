@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ * Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package co.mercenary.creators.kotlin.test.mail
 
 import co.mercenary.creators.kotlin.mail.*
-import co.mercenary.creators.kotlin.util.*
 import org.junit.jupiter.api.Test
 
 class MailTest : AbstractKotlinMailTest() {
@@ -26,7 +25,7 @@ class MailTest : AbstractKotlinMailTest() {
         val many = getMailMessageRepeat()
         val send = getMailMessageSender()
         val mail = Mail {
-            repeat(many) {
+            many repeated {
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
@@ -34,9 +33,9 @@ class MailTest : AbstractKotlinMailTest() {
                     cc("deansjones@outlook.com")
                     to(listOf("deansjones@me.com", "deansjones@gmail.com"))
                     body {
-                        html(contentResourceLoader["dean.htm"])
-                        attach("test.pdf", contentResourceLoader["test.pdf"])
-                        inline("dune.jpg", contentResourceLoader["dune.jpg"])
+                        html(loader["dean.htm"])
+                        attach("test.pdf", loader["test.pdf"])
+                        inline("dune.jpg", loader["dune.jpg"])
                     }
                 }
             }

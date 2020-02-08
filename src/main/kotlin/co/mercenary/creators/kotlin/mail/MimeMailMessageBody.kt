@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ * Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,5 +57,9 @@ class MimeMailMessageBody : Validated {
 
     override fun isValid(): Boolean {
         return (getMessageBodyText() != null) || (getMessageBodyHtml() != null)
+    }
+
+    companion object {
+        fun kind(): Class<MimeMailMessageBody> = MimeMailMessageBody::class.java
     }
 }

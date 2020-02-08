@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, Mercenary Creators Company. All rights reserved.
+ * Copyright (c) 2020, Mercenary Creators Company. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,11 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
 
     private val bc = mutableSetOf<String>()
 
-    override fun getBody(): BODY? = body
+    private val desc: String by lazy {
+        "name=(${javaClass.name}),uuid=(${uuid().toUpperCase()})"
+    }
+
+    override fun getBody() = body
 
     override fun setBody(body: BODY) {
         this.body = body
@@ -103,6 +107,8 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
     override fun isValid(): Boolean {
         return (Mail.parse(getFrom()) != null) && (getTo().isNotEmpty()) && isValid(getBody())
     }
+
+    override fun getDescription() = desc
 
     private fun append(send: MutableSet<String>, list: Iterable<String>) {
         send += list.mapNotNull { Mail.parse(it) }.distinct()
