@@ -53,7 +53,6 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
         val text = text(message)
         val from = Mail.address(message.getFrom())
         return if ((text != null) && (from != null)) {
-            val uuid = uuid()
             val tkey = getCurrentThreadName()
             val call = maps.computeIfAbsent(tkey) {
                 getTransport(sess)
@@ -107,7 +106,7 @@ open class JavaMailMessageSender : AbstractConfigurableMailMessageSender() {
                 catch (cause: Throwable) {
                     Throwables.thrown(cause)
                     logger.error(cause) {
-                        uuid.plus(SPACE_STRING).plus(tkey)
+                        Randoms.uuid().plus(SPACE_STRING).plus(tkey)
                     }
                     MailMessageSenderResultData(message = cause.toString())
                 }

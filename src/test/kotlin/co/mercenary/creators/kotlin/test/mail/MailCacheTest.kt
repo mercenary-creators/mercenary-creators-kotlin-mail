@@ -25,7 +25,7 @@ class MailCacheTest : AbstractKotlinMailTest() {
         val many = getMailMessageRepeat()
         val send = getMailMessageSender()
         val mail = Mail {
-            many repeated {
+            repeat(many) {
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")

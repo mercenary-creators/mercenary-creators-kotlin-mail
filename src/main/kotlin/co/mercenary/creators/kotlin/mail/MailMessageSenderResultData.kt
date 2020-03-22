@@ -22,6 +22,7 @@ import java.util.*
  data class MailMessageSenderResultData @JvmOverloads constructor(private val id: String? = "<UNKNOWN>", private val date: Date? = Date(), private val good: Boolean = false, private val message: String = EMPTY_STRING) : MailMessageSenderResult {
     private val text = id ?: "<UNKNOWN>"
     override fun getId() = text
+    @MailDsl
     override fun isValid() = good
     override fun getDate() = date.copyOf()
     override fun getMessage() = message

@@ -22,7 +22,6 @@ import java.io.*
 import java.net.URL
 import java.util.*
 
-@MailDsl
 class MailMessageSenderBuilder @JvmOverloads constructor(private val sender: ConfigurableMailMessageSender = DefaultMailMessageSender(), block: MailMessageSenderBuilder.() -> Unit) : Builder<ConfigurableMailMessageSender> {
 
     init {

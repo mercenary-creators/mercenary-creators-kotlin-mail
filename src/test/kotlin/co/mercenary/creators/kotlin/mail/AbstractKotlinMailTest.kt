@@ -22,25 +22,17 @@ import kotlin.math.*
 
 abstract class AbstractKotlinMailTest : AbstractKotlinTest() {
 
-    protected val loader = CONTENT_RESOURCE_LOADER
-
-    protected val cached = CACHED_CONTENT_RESOURCE_LOADER
-
-    inline infix fun Int.repeated(block: (Int) -> Unit) {
-        for (index in 0 until this) {
-            block(index)
-        }
-    }
-
     override fun getConfigPropertiesBuilder(): () -> Properties = {
         Properties().also { prop ->
             cached["file:/opt/development/properties/mercenary-creators-core/mail-test.properties"].toInputStream().use { prop.load(it) }
         }
     }
 
+    @MailDsl
     @JvmOverloads
-    protected open fun getMailMessageRepeat(many: Int = 8): Int = abs(min(getConfigProperty("co.mercenary.creators.core.test.mail.many").toIntOrNull().orElse { abs(many) }, 64))
+    protected open fun getMailMessageRepeat(many: Int = 8): Int = abs(min(getConfigProperty("co.mercenary.creators.core.test.mail.many").toIntOrNull().orElse { many.abs() }, 64))
 
+    @MailDsl
     protected open fun getMailMessageSender(): MailMessageSender = MailMessageSenderBuilder {
         port(587)
         host("smtp.gmail.com")

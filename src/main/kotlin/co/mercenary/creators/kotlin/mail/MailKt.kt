@@ -18,4 +18,6 @@
 
 package co.mercenary.creators.kotlin.mail
 
+typealias MailDsl = co.mercenary.creators.kotlin.util.AssumptionDsl
+
 typealias DefaultMailMessageSender = co.mercenary.creators.kotlin.mail.javamail.JavaMailMessageSender

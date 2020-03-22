@@ -38,7 +38,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
     private val bc = mutableSetOf<String>()
 
     private val desc: String by lazy {
-        "name=(${javaClass.name}),uuid=(${uuid().toUpperCase()})"
+        "name=(${javaClass.name}),uuid=(${Randoms.uuid().toUpperCase()})"
     }
 
     override fun getBody() = body
@@ -104,6 +104,7 @@ abstract class AbstractMailMessage<BODY> : MailMessage<BODY> {
 
     override fun getDate() = date
 
+    @MailDsl
     override fun isValid(): Boolean {
         return (Mail.parse(getFrom()) != null) && (getTo().isNotEmpty()) && isValid(getBody())
     }

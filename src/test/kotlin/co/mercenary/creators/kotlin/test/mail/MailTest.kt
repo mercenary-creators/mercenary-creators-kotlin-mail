@@ -25,13 +25,13 @@ class MailTest : AbstractKotlinMailTest() {
         val many = getMailMessageRepeat()
         val send = getMailMessageSender()
         val mail = Mail {
-            many repeated {
+            repeat(many) {
                 mime {
                     from("deansjones@gmail.com")
                     reply("deansjones@gmail.com")
                     subject("Subject: Mime Message Attach HTML $it")
                     cc("deansjones@outlook.com")
-                    to(listOf("deansjones@me.com", "deansjones@gmail.com"))
+                    to("deansjones@me.com", "deansjones@gmail.com")
                     body {
                         html(loader["dean.htm"])
                         attach("test.pdf", loader["test.pdf"])
